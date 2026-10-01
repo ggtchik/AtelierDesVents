@@ -55,6 +55,7 @@ jobs:
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
         run: |
+          python -m pip install --upgrade "pip>=24.0" "setuptools>=70.0"
           yes | buildozer -v android debug
 
       - name: Upload APK artifact
