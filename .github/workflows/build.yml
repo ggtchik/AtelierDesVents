@@ -55,7 +55,7 @@ jobs:
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
         run: |
-          yes | buildozer android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
