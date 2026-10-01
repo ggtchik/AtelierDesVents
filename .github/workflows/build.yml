@@ -52,8 +52,10 @@ jobs:
           pip install "Cython<3.0.0" buildozer
 
       - name: Build APK with Buildozer
+        env:
+          APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
         run: |
-          buildozer android debug
+          yes | buildozer android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
