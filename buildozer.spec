@@ -364,8 +364,7 @@ android.allow_backup = True
 #p4a.setup_py = false
 
 # (str) extra command line arguments to pass when invoking pythonforandroid.toolchain
-#p4a.extra_args =
-
+p4a.extra_args =--pip-version 23.3.2.
 
 
 #
