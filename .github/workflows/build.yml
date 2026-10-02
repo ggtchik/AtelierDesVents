@@ -18,6 +18,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -34,7 +40,6 @@ jobs:
             libavformat-dev \
             libavcodec-dev \
             zlib1g-dev \
-            openjdk-17-jdk \
             autoconf \
             libtool \
             pkg-config \
@@ -55,9 +60,7 @@ jobs:
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
         run: |
-          # On force la version exacte de pip compatible avec python-for-android
-          python -m pip install "pip==23.3.2" "setuptools<69.0"
-          yes | buildozer -v android debug
+          buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
