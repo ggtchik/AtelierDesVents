@@ -13,6 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Git explicitly
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+          git --version
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -39,8 +45,6 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y git
           sudo apt-get install -y \
             build-essential \
             ffmpeg \
@@ -63,9 +67,6 @@ jobs:
             libssl-dev \
             zip \
             unzip
-
-      - name: Verify Git installation
-        run: git --version
 
       - name: Install Buildozer and Cython
         run: |
