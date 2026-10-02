@@ -77,7 +77,7 @@ jobs:
           ANDROID_BUILD_TOOLS_VERSION: '34.0.0'
           PATH: ${{ env.ANDROID_HOME }}/build-tools/34.0.0:${{ env.PATH }}
         run: |
-          which aidl || (echo "aidl not found in PATH" && exit 1)
+          test -f "$ANDROID_HOME/build-tools/34.0.0/aidl" || (echo "aidl non trouvé à l'emplacement prévu" && exit 1)
           buildozer -v android debug
 
       - name: Upload APK artifact
