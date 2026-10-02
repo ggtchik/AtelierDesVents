@@ -31,6 +31,11 @@ jobs:
           build-tools-version: '34.0.0'
           ndk-version: '26.1.10909125'
 
+      - name: Accept Android SDK Licenses & Tools
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "build-tools;34.0.0" "platforms;android-34"
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
