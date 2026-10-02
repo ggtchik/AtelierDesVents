@@ -63,6 +63,7 @@ jobs:
             libssl-dev \
             zip \
             unzip
+          which git || (echo "Git installation failed" && exit 1)
 
       - name: Install Buildozer and Cython
         run: |
