@@ -64,6 +64,9 @@ jobs:
             zip \
             unzip
 
+      - name: Verify Git installation
+        run: which git && git --version
+
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
