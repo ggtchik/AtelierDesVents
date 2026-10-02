@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: android-actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -34,13 +34,13 @@ jobs:
       - name: Accept Android SDK Licenses & Setup cmdline-tools
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "build-tools;34.0.0" "platforms;android-33" "cmdline-tools;latest"
+          sdkmanager "build-tools;34.0.0" "platforms;android-33" "platform-tools" "cmdline-tools;latest"
 
           # Copie des cmdline-tools là où Buildozer les attend
           mkdir -p /home/runner/.buildozer/android/platform/android-sdk/tools/bin
           cp -r $ANDROID_HOME/cmdline-tools/latest/* /home/runner/.buildozer/android/platform/android-sdk/tools/ 2>/dev/null || true
 
-          ls -la $ANDROID_HOME/build-tools/
+          ls -la $ANDROID_HOME/platforms/
 
       - name: Install system dependencies
         run: |
@@ -76,11 +76,17 @@ jobs:
           pip install --upgrade pip
           pip install "Cython<3.0.0" buildozer
 
-      - name: Link Android build-tools for Buildozer
+      - name: Link Android build-tools and platforms for Buildozer
         run: |
+          # Lien pour les build-tools
           mkdir -p /home/runner/.buildozer/android/platform/android-sdk/build-tools
           ln -sf $ANDROID_HOME/build-tools/34.0.0 /home/runner/.buildozer/android/platform/android-sdk/build-tools/34.0.0
-          ls -la /home/runner/.buildozer/android/platform/android-sdk/build-tools/
+
+          # Lien pour les platforms (API 33)
+          mkdir -p /home/runner/.buildozer/android/platform/android-sdk/platforms
+          ln -sf $ANDROID_HOME/platforms/android-33 /home/runner/.buildozer/android/platform/android-sdk/platforms/android-33
+
+          ls -la /home/runner/.buildozer/android/platform/android-sdk/platforms/
 
       - name: Build APK with Buildozer
         env:
