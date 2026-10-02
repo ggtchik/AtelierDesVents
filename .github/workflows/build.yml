@@ -71,7 +71,10 @@ jobs:
       - name: Build APK with Buildozer
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
         run: |
+          export PATH=$ANDROID_HOME/build-tools/34.0.0:$PATH
           buildozer -v android debug
 
       - name: Upload APK artifact
