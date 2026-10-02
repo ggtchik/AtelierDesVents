@@ -71,6 +71,12 @@ jobs:
           pip install --upgrade pip
           pip install "Cython<3.0.0" buildozer
 
+      - name: Link Android build-tools for Buildozer
+        run: |
+          mkdir -p /home/runner/.buildozer/android/platform/android-sdk/build-tools
+          ln -sf $ANDROID_HOME/build-tools/34.0.0 /home/runner/.buildozer/android/platform/android-sdk/build-tools/34.0.0
+          ls -la /home/runner/.buildozer/android/platform/android-sdk/build-tools/
+
       - name: Build APK with Buildozer
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSES: '1'
@@ -80,7 +86,6 @@ jobs:
           PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${{ env.ANDROID_HOME }}/build-tools/34.0.0
         run: |
           which git
-          test -f "$ANDROID_HOME/build-tools/34.0.0/aidl" || (echo "aidl non trouvé à l'emplacement prévu" && exit 1)
           buildozer -v android debug
 
       - name: Upload APK artifact
