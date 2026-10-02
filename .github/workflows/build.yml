@@ -65,7 +65,7 @@ jobs:
             unzip
 
       - name: Verify Git installation
-        run: which git && git --version
+        run: git --version
 
       - name: Install Buildozer and Cython
         run: |
@@ -80,7 +80,6 @@ jobs:
           ANDROID_BUILD_TOOLS_VERSION: '34.0.0'
           PATH: ${{ env.ANDROID_HOME }}/build-tools/34.0.0:${{ env.PATH }}
         run: |
-          which git || sudo apt-get install -y git
           test -f "$ANDROID_HOME/build-tools/34.0.0/aidl" || (echo "aidl non trouvé à l'emplacement prévu" && exit 1)
           buildozer -v android debug
 
