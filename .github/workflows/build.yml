@@ -34,7 +34,7 @@ jobs:
       - name: Accept Android SDK Licenses & Tools
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "build-tools;34.0.0" "platforms;android-34"
+          sdkmanager "build-tools;34.0.0" "platforms;android-34" "cmdline-tools;latest"
           ls -la $ANDROID_HOME/build-tools/
 
       - name: Install system dependencies
@@ -75,9 +75,9 @@ jobs:
           ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
           ANDROID_BUILD_TOOLS_VERSION: '34.0.0'
+          PATH: ${{ env.ANDROID_HOME }}/build-tools/34.0.0:${{ env.PATH }}
         run: |
-          export PATH=$ANDROID_HOME/build-tools/34.0.0:$PATH
-          which aidl || (echo "aidl non trouvé dans le PATH" && exit 1)
+          which aidl || (echo "aidl not found in PATH" && exit 1)
           buildozer -v android debug
 
       - name: Upload APK artifact
